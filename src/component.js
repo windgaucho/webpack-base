@@ -1,4 +1,6 @@
-export default (text = "HOLA WEBPACK") => {
+export default (text = "Hello world") => {
   const element = document.createElement("div");
-  element.innerHTML = text; return element;
+  element.className = "pure-button";
+  element.innerHTML = text;
+  return element;
 };
