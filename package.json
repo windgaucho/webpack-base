@@ -19,6 +19,8 @@
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
     "error-overlay-webpack-plugin": "^0.1.5",
+    "eslint": "^4.19.1",
+    "eslint-config-equimper": "^2.2.2",
     "file-loader": "^1.1.11",
     "git-revision-webpack-plugin": "^3.0.3",
     "glob": "^7.1.2",
