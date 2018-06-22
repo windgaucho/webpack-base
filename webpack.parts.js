@@ -29,8 +29,10 @@ exports.devServer = ({ host, port } = {}) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
+      template: require('html-webpack-template'),
       title: 'Webpack demo',
       appMountId: 'app',
+      inject: false,
     }),
     new ErrorOverlayPlugin(),
     new DashboardPlugin(),
