@@ -39,6 +39,14 @@ exports.devServer = ({ host, port } = {}) => ({
   ],
 });
 
+exports.loadGraphql = () => ({
+  module: {
+    rules: [
+      { test: /\.graphql?$/, loader: 'webpack-graphql-loader' },
+    ],
+  },
+});
+
 exports.loadCSS = ({ include, exclude } = {}) => ({
   module: {
     rules: [

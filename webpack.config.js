@@ -1,21 +1,22 @@
-const merge = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const parts = require("./webpack.parts");
-const path = require("path");
-const glob = require("glob");
+const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const parts = require('./webpack.parts');
+const path = require('path');
+const glob = require('glob');
 
 const PATHS = {
-  app: path.join(__dirname, "src"),
-  build: path.join(__dirname, "dist"),
+  app: path.join(__dirname, 'src'),
+  build: path.join(__dirname, 'dist'),
 };
 
 const commonConfig = merge([
   {
     plugins: [
-      new HtmlWebpackPlugin({ title: "Webpack base" }),
+      new HtmlWebpackPlugin({ title: 'Webpack base' }),
     ],
   },
   parts.loadJavaScript({ include: PATHS.app }),
+  parts.loadGraphql(),
 ]);
 
 /**
@@ -24,8 +25,8 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     output: {
-      chunkFilename: "[name].[chunkhash:4].js",
-      filename: "[name].[chunkhash:4].js",
+      chunkFilename: '[name].[chunkhash:4].js',
+      filename: '[name].[chunkhash:4].js',
     },
   },
   parts.clean(PATHS.build),
@@ -40,9 +41,9 @@ const productionConfig = merge([
       safe: true,
     },
   }),
-  parts.generateSourceMaps({ type: "source-map" }),
+  parts.generateSourceMaps({ type: 'source-map' }),
   parts.extractCSS({
-    use: "css-loader",
+    use: 'css-loader',
   }),
   parts.purifyCSS({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
@@ -50,7 +51,7 @@ const productionConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: "[name].[hash:4].[ext]",
+      name: '[name].[hash:4].[ext]',
     },
   }),
   {
@@ -59,13 +60,13 @@ const productionConfig = merge([
         cacheGroups: {
           commons: {
             test: /[\\/]node_modules[\\/]/,
-            name: "vendor",
-            chunks: "initial",
+            name: 'vendor',
+            chunks: 'initial',
           },
         },
       },
       runtimeChunk: {
-        name: "manifest",
+        name: 'manifest',
       },
     },
   },
@@ -76,7 +77,7 @@ const productionConfig = merge([
  * CONFIGURACION PARA DESARROLLO
  */
 const developmentConfig = merge([
-  parts.generateSourceMaps({ type: "eval-source-map" }),
+  parts.generateSourceMaps({ type: 'eval-source-map' }),
   parts.devServer({
     // Customize host/port here if needed
     host: process.env.HOST,
@@ -87,7 +88,7 @@ const developmentConfig = merge([
 ]);
 
 module.exports = mode => {
-  if (mode === "production") {
+  if (mode === 'production') {
     return merge(commonConfig, productionConfig, { mode });
   }
   return merge(commonConfig, developmentConfig, { mode });
